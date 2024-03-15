@@ -1,15 +1,17 @@
 using UnityEngine;
 
-public class PlayerInputs : MonoBehaviour
+public class ScPlayerInputs : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpHeight;
+
     [SerializeField] private Rigidbody2D _rigidbody;
+
     [SerializeField] private Vector2 _boxSize;
     [SerializeField] private float _castDistance;
     [SerializeField] private LayerMask _groundLayer;
 
-    public static PlayerInputs Instance;
+    public static ScPlayerInputs Instance;
 
     private void Awake()
     {
@@ -30,9 +32,8 @@ public class PlayerInputs : MonoBehaviour
             if (_rigidbody.velocity.x > 0)
             {
                 _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
-
             }
-            _rigidbody.AddForce(Vector2.left * _speed, ForceMode2D.Force);
+            _rigidbody.AddForce(Vector2.left * _speed * Time.deltaTime, ForceMode2D.Force);
         }
 
         else if (Input.GetKey(KeyCode.D))
@@ -40,14 +41,13 @@ public class PlayerInputs : MonoBehaviour
             if (_rigidbody.velocity.x < 0)
             {
                 _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
-
             }
-            _rigidbody.AddForce(Vector2.right * _speed, ForceMode2D.Force);
+            _rigidbody.AddForce(Vector2.right * _speed * Time.deltaTime, ForceMode2D.Force);
         }
 
         if (Input.GetKey(KeyCode.Space) && isGrounded() == true) 
         {
-            _rigidbody.AddForce(Vector2.up * _jumpHeight, ForceMode2D.Force);
+            _rigidbody.AddForce(Vector2.up * _jumpHeight* Time.deltaTime, ForceMode2D.Force);
         }
     }
 
@@ -63,8 +63,8 @@ public class PlayerInputs : MonoBehaviour
         }
     }
 
-  /*private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position - transform.up * _castDistance, _boxSize);
-    }*/
+    }
 }
