@@ -4,10 +4,15 @@ public class ScBulletCollision : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.TryGetComponent(out ScPlayerInputs Player) && !collision.TryGetComponent(out ScBulletCollision Bullet))
+        if (collision.TryGetComponent(out ScSpikyBall SpikyBall))
+        {
+            Destroy(gameObject);
+        }
+
+        else if (!collision.TryGetComponent(out ScPlayerInputs Player) && !collision.TryGetComponent(out ScBulletCollision Bullet))
         {
             Destroy(collision.gameObject);
             Destroy(gameObject);
-        }
+        } 
     }
 }

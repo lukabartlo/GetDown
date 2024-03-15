@@ -63,8 +63,8 @@ public class ScPlayerInputs : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position - transform.up * _castDistance, _boxSize);
-    }
+    }*/
 }

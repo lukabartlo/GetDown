@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ScShooting : MonoBehaviour
@@ -22,7 +20,7 @@ public class ScShooting : MonoBehaviour
             GameObject playerBullet = Instantiate(bullet, _spawnPos.position, Quaternion.identity);
             playerBullet.GetComponent<Rigidbody2D>().AddForce(Vector2.down * _bulletSpeed, ForceMode2D.Force);
             _rigidbodyPlayer.velocity = new Vector2(_rigidbodyPlayer.velocity.x, _knockback);
-            StartCoroutine(DestroyBullet(0.25f,playerBullet));
+            StartCoroutine(DestroyBullet(0.4f,playerBullet));
         }
     }
 
