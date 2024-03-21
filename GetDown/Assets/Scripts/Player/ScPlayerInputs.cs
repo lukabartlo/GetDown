@@ -49,6 +49,13 @@ public class ScPlayerInputs : MonoBehaviour
         {
             _rigidbody.AddForce(Vector2.up * _jumpHeight* Time.deltaTime, ForceMode2D.Force);
         }
+
+        if (isGrounded() == true)
+        {
+            ScShooting.Instance.numberBullet = ScShooting.Instance.maxNumberBullet;
+            ScEnergyBar.Instance.energyAmount.text = ScShooting.Instance.maxNumberBullet.ToString();
+            ScEnergyBar.Instance.SetMaxEnergy();
+        }
     }
 
     public bool isGrounded()

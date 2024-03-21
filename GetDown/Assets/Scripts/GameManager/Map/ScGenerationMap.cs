@@ -24,7 +24,7 @@ public class ScGenerationMap : MonoBehaviour
     {
         for (int y = (int) _player.position.y - 2; y > - _height; y--)
         {
-            for (int x = 1; x < _width; x++)
+            for (int x = 0; x < _width; x++)
             {
                 if (Mathf.PerlinNoise(x / 10f + _seed, y / 10f + _seed) >= _chanceSpawn)
                 {
