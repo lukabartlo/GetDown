@@ -31,6 +31,11 @@ public class ScTakeDamage : MonoBehaviour
 
     private void Update()
     {
+        if(currentHealth > maxHealth) 
+        {
+            currentHealth = maxHealth;
+        }
+
         ScHealthBar.Instance.SetHealth(currentHealth); 
         ScHealthBar.Instance.healthAmount.text = currentHealth.ToString();
         Death();
@@ -48,6 +53,7 @@ public class ScTakeDamage : MonoBehaviour
     {
         if (currentHealth <= 0) 
         {
+            ScVictoryDefeat.Instance.Defeat();
             Destroy(gameObject);
         }
     }

@@ -4,7 +4,7 @@ public class ScBulletCollision : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out ScSpikyBall SpikyBall) || collision.gameObject.layer == 9)
+        if (collision.TryGetComponent(out ScSpikyBall SpikyBall) || collision.gameObject.layer == 9 || collision.TryGetComponent(out ScHeart Heart))
         {
             Destroy(gameObject);
         }

@@ -3,13 +3,15 @@ using UnityEngine;
 public class ScPlayerInputs : MonoBehaviour
 {
     [SerializeField] private float _speed;
+    [SerializeField] private float _maxSpeed;
     [SerializeField] private float _jumpHeight;
 
-    [SerializeField] private Rigidbody2D _rigidbody;
+    public Rigidbody2D rigidbodyPlayer;
 
     [SerializeField] private Vector2 _boxSize;
     [SerializeField] private float _castDistance;
     [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] private LayerMask _endLayer;
 
     public static ScPlayerInputs Instance;
 
@@ -29,25 +31,40 @@ public class ScPlayerInputs : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A))
         {
-            if (_rigidbody.velocity.x > 0)
+            gameObject.GetComponent<SpriteRenderer>().flipX = true;
+            if (rigidbodyPlayer.velocity.x > 0)
             {
-                _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
+                rigidbodyPlayer.velocity = new Vector2(0, rigidbodyPlayer.velocity.y);
             }
-            _rigidbody.AddForce(Vector2.left * _speed * Time.deltaTime, ForceMode2D.Force);
+
+            rigidbodyPlayer.AddForce(Vector2.left * _speed * Time.deltaTime, ForceMode2D.Force);
+
+            if (_speed >= _maxSpeed) 
+            {
+                _speed = _maxSpeed;
+            }
         }
 
         else if (Input.GetKey(KeyCode.D))
         {
-            if (_rigidbody.velocity.x < 0)
+            gameObject.GetComponent<SpriteRenderer>().flipX = false;
+            if (rigidbodyPlayer.velocity.x < 0)
             {
-                _rigidbody.velocity = new Vector2(0, _rigidbody.velocity.y);
+                rigidbodyPlayer.velocity = new Vector2(0, rigidbodyPlayer.velocity.y);
             }
-            _rigidbody.AddForce(Vector2.right * _speed * Time.deltaTime, ForceMode2D.Force);
+
+            rigidbodyPlayer.AddForce(Vector2.right * _speed * Time.deltaTime, ForceMode2D.Force);
+
+            if (_speed >= _maxSpeed)
+            {
+                _speed = _maxSpeed;
+            }
         }
 
-        if (Input.GetKey(KeyCode.Space) && isGrounded() == true) 
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded() == true) 
         {
-            _rigidbody.AddForce(Vector2.up * _jumpHeight* Time.deltaTime, ForceMode2D.Force);
+            rigidbodyPlayer.AddForce(Vector2.up * _jumpHeight, ForceMode2D.Force);
+            ScAudioManager.Instance.PlaySong("Jump");
         }
 
         if (isGrounded() == true)
@@ -67,6 +84,14 @@ public class ScPlayerInputs : MonoBehaviour
         else 
         { 
             return false; 
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.layer == 9)
+        {
+            ScVictoryDefeat.Instance.Victory();
         }
     }
 

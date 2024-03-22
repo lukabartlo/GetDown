@@ -6,10 +6,12 @@ public class ScGenerationMap : MonoBehaviour
     [SerializeField] private int _height;
 
     [SerializeField] private int _spikyBallSpawnChance;
+    [SerializeField] private int _heartSpawnChance;
     [SerializeField] private float _chanceSpawn;
 
     [SerializeField] private GameObject _destructibleBlock;
     [SerializeField] private GameObject _spikyBall;
+    [SerializeField] private GameObject _heart;
     [SerializeField] private Transform _player;
 
     private int _seed;
@@ -33,6 +35,10 @@ public class ScGenerationMap : MonoBehaviour
                 else if (Random.Range(0, _spikyBallSpawnChance) == 0)
                 {
                     Instantiate(_spikyBall, new Vector3(x, y), Quaternion.identity);
+                }
+                else if (Random.Range(0, _heartSpawnChance) == 0)
+                {
+                    Instantiate(_heart, new Vector3(x, y), Quaternion.identity);
                 }
             }
         } 

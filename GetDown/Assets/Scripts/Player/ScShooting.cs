@@ -41,6 +41,7 @@ public class ScShooting : MonoBehaviour
             numberBullet--;
             ScEnergyBar.Instance.SetEnergy(numberBullet);
             ScEnergyBar.Instance.energyAmount.text = numberBullet.ToString();
+            ScAudioManager.Instance.PlaySong("Shoot");
         }
     }
 
