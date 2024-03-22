@@ -11,6 +11,7 @@ public class ScHeart : MonoBehaviour
         if (Vector3.Distance(gameObject.transform.position, ScPlayerInputs.Instance.rigidbodyPlayer.transform.position) <= _grabRange)
         {
             ScTakeDamage.Instance.currentHealth++;
+            ScAudioManager.Instance.PlaySong("HeartCollect");
             Destroy(gameObject);
         }
     }

@@ -7,6 +7,9 @@ public class ScTakeDamage : MonoBehaviour
     public int maxHealth = 5;
     public int currentHealth;
 
+    [SerializeField] private Sprite _hurtSprite;
+    [SerializeField] private Sprite _normalSprite;
+
     private ScHealthBar _healthBar;
 
     public static ScTakeDamage Instance;
@@ -35,7 +38,6 @@ public class ScTakeDamage : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
-
         ScHealthBar.Instance.SetHealth(currentHealth); 
         ScHealthBar.Instance.healthAmount.text = currentHealth.ToString();
         Death();
@@ -46,6 +48,8 @@ public class ScTakeDamage : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out ScSpikyBall SpikyBall))
         {
             currentHealth--;
+            StartCoroutine(SwitchSprite(1, ScPlayerInputs.Instance.rigidbodyPlayer.gameObject));
+            ScAudioManager.Instance.PlaySong("SlimeHurt");
         }
     }
 
@@ -56,5 +60,12 @@ public class ScTakeDamage : MonoBehaviour
             ScVictoryDefeat.Instance.Defeat();
             Destroy(gameObject);
         }
+    }
+
+    IEnumerator SwitchSprite(float seconds, GameObject player)
+    {
+        player.GetComponent<SpriteRenderer>().sprite = _hurtSprite;
+        yield return new WaitForSeconds(seconds);
+        player.GetComponent<SpriteRenderer>().sprite = _normalSprite;
     }
 }

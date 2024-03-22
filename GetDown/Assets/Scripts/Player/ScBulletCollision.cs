@@ -13,6 +13,7 @@ public class ScBulletCollision : MonoBehaviour
         {
             Destroy(collision.gameObject);
             Destroy(gameObject);
+            ScAudioManager.Instance.PlaySong("StoneBreaking");
         } 
     }
 }
